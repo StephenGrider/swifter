@@ -5,26 +5,31 @@ protocol ExampleProtocol {
 
 // Write an enumeration that conforms to this protocol
 
-enum SampleEnum: ExampleProtocol {
-    case Baseline, Adjusted
+enum Planets: ExampleProtocol {
+    case Earth, Mars
     
     var simpleDescription: String {
-        get {
-            switch self {
-            case Baseline:
-                return "Baseline description"
-            case Adjusted:
-                return "Adjusted description"
-            }
+        switch self {
+        case .Earth:
+            return "Blue and cloudy"
+        case .Mars:
+            return "Red and dusty"
         }
     }
     
     mutating func adjust() {
-        self = SampleEnum.Adjusted
+        switch self {
+        case .Earth:
+            self = .Mars
+        case .Mars:
+            self = .Earth
+        }
     }
-    
 }
 
-var enumInstance = SampleEnum.Baseline
-enumInstance.adjust()
-enumInstance.simpleDescription
+var planet = Planets.Mars
+planet.simpleDescription
+planet.adjust()
+planet.simpleDescription
+
+
