@@ -39,11 +39,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "tableCell")
-        
         let rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
+        let urlString: String = rowData["artworkUrl60"] as String
+        let imgUrl: NSURL = NSURL(string: urlString)!
+        let imgData = NSData(contentsOfURL: imgUrl)
+        let formattedPrice = rowData["formattedPrice"] as String
         
-        cell.textLabel.text = rowData["trackName"]
-        
+        cell.imageView.image = UIImage(data: imgData!)
+        cell.textLabel.text = rowData["trackName"] as? String
+        cell.detailTextLabel?.text = formattedPrice
         
         return cell
     }
