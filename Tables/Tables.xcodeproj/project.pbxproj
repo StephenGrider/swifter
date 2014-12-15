@@ -405,6 +405,7 @@
 				EC02CCC31A393F760030CD65 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EC02CCC41A393F760030CD65 /* Build configuration list for PBXNativeTarget "TablesTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +414,7 @@
 				EC02CCC61A393F760030CD65 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

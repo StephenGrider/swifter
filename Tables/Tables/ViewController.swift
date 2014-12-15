@@ -9,10 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    // get a reference to the table view
+    @IBOutlet var appTableView: UITableView?
+    var tableData = []
+    
+    /*
+        Init
+    */
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        searchItunesFor("productivity")
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,19 +29,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
+    /*
+        Control
+    */
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "tableCell")
-        cell.textLabel.text = "Row \(indexPath.row)"
-        cell.detailTextLabel?.text = "Subtitle \(indexPath.row)"
+        
+        let rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
+        
+        cell.textLabel.text = rowData["trackName"]
+        
         
         return cell
     }
-
-
+    
+    func searchItunesFor(searchTerm: String) {
+        let itunesSearchTerm = searchTerm.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+        
+        if let escapedSearchTerm = itunesSearchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
+            let urlPath = "http://itunes.apple.com/search?term=\(escapedSearchTerm)&media=software"
+            let url = NSURL(string: urlPath)
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
+                if(error != nil) { println(error.localizedDescription)}
+                var err: NSError?
+                
+                var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+                if(err != nil) { println("JSON Error \(err!.localizedDescription)") }
+                
+                let results: NSArray = jsonResult["results"] as NSArray
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableData = results
+                    self.appTableView!.reloadData()
+                })
+            })
+            
+            task.resume()
+        }
+    }
 }
 
 
