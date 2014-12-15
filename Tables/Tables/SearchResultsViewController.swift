@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // get a reference to the table view
-    @IBOutlet var appTableView: UITableView?
+    @IBOutlet weak var appTableView: UITableView!
+    
     var tableData = []
     
     /*

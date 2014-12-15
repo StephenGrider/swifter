@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Search Results View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Tables" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="SearchResultsViewController" customModule="Tables" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -20,15 +20,15 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="hWc-LF-CvB"/>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="ip9-km-xVU"/>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="bCP-Tn-foO"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="7Wv-N6-ivj"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="appTableView" destination="v7E-Nh-WAm" id="n3T-Yd-OM7"/>
+                        <outlet property="appTableView" destination="v7E-Nh-WAm" id="Y7c-HU-nuu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
