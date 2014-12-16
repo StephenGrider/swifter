@@ -13,8 +13,10 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     // get a reference to the table view
     @IBOutlet weak var appTableView: UITableView!
     
+    let kCellIdentifier: String = "SearchResultCell"
     var tableData = []
     var api = APIController()
+    var imageCache = [ String: UIImage]()
     
     /*
         Init
@@ -35,20 +37,13 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         Control
     */
     
-    func didReceiveAPIResults(results: NSDictionary) {
-        var resultsArr: NSArray = results["results"] as NSArray
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tableData = resultsArr
-            self.appTableView!.reloadData()
-        })
-    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "tableCell")
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell") as UITableViewCell
         let rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
         let urlString: String = rowData["artworkUrl60"] as String
         let imgUrl: NSURL = NSURL(string: urlString)!
@@ -62,7 +57,29 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         return cell
     }
     
+    /*
+        Events
+    */
     
+    func didReceiveAPIResults(results: NSDictionary) {
+        var resultsArr: NSArray = results["results"] as NSArray
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableData = resultsArr
+            self.appTableView!.reloadData()
+        })
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
+        var name: String = rowData["trackName"] as String
+        var formattedPrice: String = rowData["formattedPrice"] as String
+        
+        var alert: UIAlertView = UIAlertView()
+        alert.title = name
+        alert.message = formattedPrice
+        alert.addButtonWithTitle("Ok")
+        alert.show()
+    }
 }
 
 
