@@ -15,7 +15,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     
     let kCellIdentifier: String = "SearchResultCell"
     var tableData = []
-    var api = APIController()
+    var api: APIController?
     var imageCache = [ String: UIImage]()
     
     /*
@@ -24,8 +24,9 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        api.delegate = self
-        api.searchItunesFor("Pool")
+        api = APIController(delegate: self)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        api!.searchItunesFor("Pool")
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,8 +51,8 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         let imgData = NSData(contentsOfURL: imgUrl)
         let formattedPrice = rowData["formattedPrice"] as String
         
-        cell.imageView.image = UIImage(data: imgData!)
-        cell.textLabel.text = rowData["trackName"] as? String
+        cell.imageView?.image = UIImage(data: imgData!)
+        cell.textLabel?.text = rowData["trackName"] as? String
         cell.detailTextLabel?.text = formattedPrice
         
         return cell
