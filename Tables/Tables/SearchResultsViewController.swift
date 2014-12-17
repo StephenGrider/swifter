@@ -14,7 +14,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var appTableView: UITableView!
     
     let kCellIdentifier: String = "SearchResultCell"
-    var tableData = []
+    var albums = [Album]()
     var api: APIController?
     var imageCache = [ String: UIImage]()
     
@@ -40,20 +40,19 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
+        return albums.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell") as UITableViewCell
-        let rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
-        let urlString: String = rowData["artworkUrl60"] as String
-        let imgUrl: NSURL = NSURL(string: urlString)!
-        let imgData = NSData(contentsOfURL: imgUrl)
-        let formattedPrice = rowData["formattedPrice"] as String
+        let album: Album = self.albums[indexPath.row]
+        let thumbnailImage: NSURL = NSURL(string: album.thumbnailImageUrl)!
+        let imgData = NSData(contentsOfURL: thumbnailImage)
+        let formattedPrice = album.price as String
         
         cell.imageView?.image = UIImage(data: imgData!)
-        cell.textLabel?.text = rowData["trackName"] as? String
-        cell.detailTextLabel?.text = formattedPrice
+        cell.textLabel?.text = album.title
+        cell.detailTextLabel?.text = album.price
         
         return cell
     }
@@ -65,18 +64,19 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     func didReceiveAPIResults(results: NSDictionary) {
         var resultsArr: NSArray = results["results"] as NSArray
         dispatch_async(dispatch_get_main_queue(), {
-            self.tableData = resultsArr
+            self.albums = Album.albumsWithJson(resultsArr)
             self.appTableView!.reloadData()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         })
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
-        var name: String = rowData["trackName"] as String
-        var formattedPrice: String = rowData["formattedPrice"] as String
+        var album = self.albums[indexPath.row]
+        var title: String = album.title
+        var formattedPrice: String = album.price
         
         var alert: UIAlertView = UIAlertView()
-        alert.title = name
+        alert.title = title
         alert.message = formattedPrice
         alert.addButtonWithTitle("Ok")
         alert.show()
