@@ -81,6 +81,13 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         alert.addButtonWithTitle("Ok")
         alert.show()
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var detailsViewController: DetailsViewController = segue.destinationViewController as DetailsViewController
+        var albumIndex = appTableView!.indexPathForSelectedRow()!.row
+        var selectedAlbum = self.albums[albumIndex]
+        detailsViewController.album = selectedAlbum
+    }
 }
 
 

@@ -47,10 +47,10 @@
             </objects>
             <point key="canvasLocation" x="1115" y="-470"/>
         </scene>
-        <!--View Controller-->
+        <!--Details View Controller-->
         <scene sceneID="bDk-c4-HWR">
             <objects>
-                <viewController id="Gdu-dN-4CR" sceneMemberID="viewController">
+                <viewController id="Gdu-dN-4CR" customClass="DetailsViewController" customModule="Tables" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RtT-1x-dAr"/>
                         <viewControllerLayoutGuide type="bottom" id="0Nc-Un-6BP"/>
@@ -58,8 +58,23 @@
                     <view key="view" contentMode="scaleToFill" id="2Xh-aa-Lt9">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjk-k6-2J7">
+                                <rect key="frame" x="38" y="134" width="233" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nXF-z6-cI9">
+                                <rect key="frame" x="31" y="221" width="240" height="173"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="albumCover" destination="nXF-z6-cI9" id="Zvd-Uw-ZcY"/>
+                        <outlet property="titleLabel" destination="Vjk-k6-2J7" id="zt2-AQ-VBv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YEm-PM-OCv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
